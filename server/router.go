@@ -1,6 +1,7 @@
 package server
 
 import (
+	"backend/server/api"
 	"github.com/gin-gonic/gin"
 	"net/http"
 )
@@ -13,6 +14,8 @@ func SetupRouter() {
 			"message": "Your server is working",
 		})
 	})
+
+	router.GET("/restrooms", api.GetAllRestrooms)
 
 	_ = router.Run()
 }
