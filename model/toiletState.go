@@ -3,9 +3,9 @@ package model
 type ToiletState string
 
 const (
-	SUFFICIENT ToiletState = "sufficient"
+	SUFFICIENT   ToiletState = "sufficient"
 	INSUFFICIENT ToiletState = "insufficient"
 	DISCONNECTED ToiletState = "disconnected"
-	CLEANING ToiletState = "cleaning"
-	MAINTAINING ToiletState = "maintaining"
+	CLEANING     ToiletState = "cleaning"
+	MAINTAINING  ToiletState = "maintaining"
 )

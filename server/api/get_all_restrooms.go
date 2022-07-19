@@ -2,8 +2,9 @@ package api
 
 import (
 	"backend/model"
-	"github.com/gin-gonic/gin"
 	"net/http"
+
+	"github.com/gin-gonic/gin"
 )
 
 func GetAllRestrooms(c *gin.Context) {
