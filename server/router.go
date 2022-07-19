@@ -2,8 +2,9 @@ package server
 
 import (
 	"backend/server/api"
-	"github.com/gin-gonic/gin"
 	"net/http"
+
+	"github.com/gin-gonic/gin"
 )
 
 func SetupRouter() {
@@ -16,6 +17,7 @@ func SetupRouter() {
 	})
 
 	router.GET("/restrooms", api.GetAllRestrooms)
+	router.POST("/restroom", api.RegisterRestroom)
 
 	_ = router.Run()
 }
