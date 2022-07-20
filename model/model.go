@@ -25,7 +25,7 @@ func GetRestroom(id string) Restroom {
 }
 
 func RegisterRestroom(restroom Restroom) {
-	restrooms[restroom.Id] = restroom
+	restrooms[restroom.GetId()] = restroom
 }
 
 func GenerateNextRestroomId() string {

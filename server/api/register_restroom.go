@@ -2,22 +2,19 @@ package api
 
 import (
 	"backend/model"
+	"fmt"
 	"net/http"
 
 	"github.com/gin-gonic/gin"
 )
 
 func RegisterRestroom(c *gin.Context) {
-	restroom := model.Restroom{}
-	c.BindJSON(&restroom)
-
-	if restroom.Location == "" {
-		c.JSON(http.StatusInternalServerError, nil)
-		return
-	}
+	json := make(map[string]interface{})
+	c.BindJSON(&json)
 
 	id := model.GenerateNextRestroomId()
-	restroom.Id = id
+	location := json["location"]
+	restroom := model.Restroom{Id: id, Location: fmt.Sprint(location), ToiletIdList: []string{}}
 	model.RegisterRestroom(restroom)
 
 	c.JSON(http.StatusCreated, gin.H{
