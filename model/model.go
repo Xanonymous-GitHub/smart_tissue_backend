@@ -1,15 +1,34 @@
 package model
 
+import "strconv"
+
 var (
-	Restrooms              map[string]Restroom
-	Toilets                map[string]Toilet
-	UndeployedToiletIdList []string
-	NextRestroomId         int
+	restrooms              map[string]Restroom
+	toilets                map[string]Toilet
+	undeployedToiletIdList []string
+	nextRestroomId         int
 )
 
 func Setup() {
-	Restrooms = map[string]Restroom{}
-	Toilets = map[string]Toilet{}
-	UndeployedToiletIdList = []string{}
-	NextRestroomId = 1
+	restrooms = map[string]Restroom{}
+	toilets = map[string]Toilet{}
+	undeployedToiletIdList = []string{}
+	nextRestroomId = 1
+}
+
+func GetAllRestrooms() map[string]Restroom {
+	return restrooms
+}
+
+func GetRestroom(id string) Restroom {
+	return restrooms[id]
+}
+
+func RegisterRestroom(restroom Restroom) {
+	restrooms[restroom.Id] = restroom
+}
+
+func GenerateNextRestroomId() string {
+	defer func() { nextRestroomId += 1 }()
+	return strconv.Itoa(nextRestroomId)
 }

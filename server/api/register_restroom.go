@@ -3,16 +3,12 @@ package api
 import (
 	"backend/model"
 	"net/http"
-	"strconv"
 
 	"github.com/gin-gonic/gin"
 )
 
 func RegisterRestroom(c *gin.Context) {
-	id := strconv.Itoa(model.NextRestroomId)
-	restroom := model.Restroom{
-		Id: id,
-	}
+	restroom := model.Restroom{}
 	c.BindJSON(&restroom)
 
 	if restroom.Location == "" {
@@ -20,11 +16,12 @@ func RegisterRestroom(c *gin.Context) {
 		return
 	}
 
-	model.Restrooms[id] = restroom
-	model.NextRestroomId += 1
+	id := model.GenerateNextRestroomId()
+	restroom.Id = id
+	model.RegisterRestroom(restroom)
 
 	c.JSON(http.StatusCreated, gin.H{
 		"message":  "Register restroom success!",
-		"restroom": model.Restrooms[id],
+		"restroom": model.GetRestroom(id),
 	})
 }
