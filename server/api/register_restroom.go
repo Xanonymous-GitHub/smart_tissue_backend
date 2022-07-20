@@ -20,11 +20,11 @@ func RegisterRestroom(c *gin.Context) {
 		return
 	}
 
-	model.RestroomList[id] = restroom
+	model.Restrooms[id] = restroom
 	model.NextRestroomId += 1
 
 	c.JSON(http.StatusCreated, gin.H{
 		"message":  "Register restroom success!",
-		"restroom": model.RestroomList[id],
+		"restroom": model.Restrooms[id],
 	})
 }

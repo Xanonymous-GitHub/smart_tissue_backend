@@ -1,11 +1,15 @@
 package model
 
 var (
-	RestroomList   map[string]Restroom
-	NextRestroomId int
+	Restrooms              map[string]Restroom
+	Toilets                map[string]Toilet
+	UndeployedToiletIdList []string
+	NextRestroomId         int
 )
 
 func Setup() {
-	RestroomList = map[string]Restroom{}
+	Restrooms = map[string]Restroom{}
+	Toilets = map[string]Toilet{}
+	UndeployedToiletIdList = []string{}
 	NextRestroomId = 1
 }

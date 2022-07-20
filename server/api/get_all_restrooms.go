@@ -8,7 +8,7 @@ import (
 )
 
 func GetAllRestrooms(c *gin.Context) {
-	restrooms := model.RestroomList
+	restrooms := model.Restrooms
 
 	c.JSON(http.StatusOK, gin.H{
 		"restrooms": restrooms,
