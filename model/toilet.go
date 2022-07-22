@@ -1,8 +1,8 @@
 package model
 
 type Toilet struct {
-	id         string
-	percentage float32
-	location   string
-	state      ToiletState
+	Id         string
+	Percentage float32
+	Location   string
+	State      ToiletState
 }
