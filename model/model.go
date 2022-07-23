@@ -24,6 +24,10 @@ func GetRestroom(id string) Restroom {
 	return restrooms[id]
 }
 
+func GetUndeployedToiletIdList() []string {
+	return undeployedToiletIdList
+}
+
 func RegisterRestroom(restroom Restroom) {
 	restrooms[restroom.GetId()] = restroom
 }
