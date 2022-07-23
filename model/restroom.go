@@ -9,3 +9,7 @@ type Restroom struct {
 func (restroom *Restroom) GetId() string {
 	return restroom.Id
 }
+
+func (restroom *Restroom) GetToiletIdList() []string {
+	return restroom.ToiletIdList
+}

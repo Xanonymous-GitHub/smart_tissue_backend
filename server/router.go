@@ -11,6 +11,7 @@ func SetupRouter() {
 
 	router.GET("/restrooms", api.GetAllRestrooms)
 	router.POST("/restroom", api.RegisterRestroom)
+	router.GET("/toilets", api.GetMultipleToilets)
 
 	_ = router.Run()
 }
