@@ -17,9 +17,17 @@ func UpdateRestroomLocation(c *gin.Context) {
 		c.JSON(http.StatusBadRequest, gin.H{
 			"message": "Failed to update, please send the id of the restroom.",
 		})
+		return
 	}
 
-	newLocation := json["location"]
+	newLocation, hasLocation := json["location"]
+	if !hasLocation {
+		c.JSON(http.StatusBadRequest, gin.H{
+			"message": "Failed to update, please send the new location of this restroom.",
+		})
+		return
+	}
+
 	model.UpdateRestroomLocation(fmt.Sprint(id), fmt.Sprint(newLocation))
 
 	c.JSON(http.StatusOK, gin.H{
