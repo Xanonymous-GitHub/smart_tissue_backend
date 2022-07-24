@@ -32,3 +32,9 @@ func GenerateNextRestroomId() string {
 	defer func() { nextRestroomId += 1 }()
 	return strconv.Itoa(nextRestroomId)
 }
+
+func UpdateRestroomLocation(id string, location string) {
+	restroom := restrooms[id]
+	restroom.SetLocation(location)
+	restrooms[id] = restroom
+}
