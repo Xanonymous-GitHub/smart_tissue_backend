@@ -41,6 +41,7 @@ func GetToilet(id string) Toilet {
 
 func RegisterToilet(toilet Toilet) {
 	toilets[toilet.GetId()] = toilet
+	undeployedToiletIdList = append(undeployedToiletIdList, toilet.GetId())
 }
 
 func GenerateNextToiletId() string {
