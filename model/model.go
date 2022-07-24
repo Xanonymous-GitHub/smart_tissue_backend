@@ -32,3 +32,15 @@ func GenerateNextRestroomId() string {
 	defer func() { nextRestroomId += 1 }()
 	return strconv.Itoa(nextRestroomId)
 }
+
+func GetToilet(id string) Toilet {
+	return toilets[id]
+}
+
+func UpdateToiletData(toilet Toilet) bool {
+	if _, ok := toilets[toilet.GetId()]; ok {
+		toilets[toilet.GetId()] = toilet
+		return true
+	}
+	return false
+}
