@@ -33,6 +33,11 @@ func GenerateNextRestroomId() string {
 	return strconv.Itoa(nextRestroomId)
 }
 
+func IsRestroomExists(id string) bool {
+	_, exists := restrooms[id]
+	return exists
+}
+
 func UpdateRestroomLocation(id string, location string) {
 	restroom := restrooms[id]
 	restroom.SetLocation(location)

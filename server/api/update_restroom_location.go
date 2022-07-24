@@ -28,6 +28,13 @@ func UpdateRestroomLocation(c *gin.Context) {
 		return
 	}
 
+	if !model.IsRestroomExists(fmt.Sprint(id)) {
+		c.JSON(http.StatusBadRequest, gin.H{
+			"message": "Failed to update, please register a restroom or request an existing restroom.",
+		})
+		return
+	}
+
 	model.UpdateRestroomLocation(fmt.Sprint(id), fmt.Sprint(newLocation))
 
 	c.JSON(http.StatusOK, gin.H{
