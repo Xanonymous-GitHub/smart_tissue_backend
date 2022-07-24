@@ -23,7 +23,7 @@ func UpdateRestroomLocation(c *gin.Context) {
 	model.UpdateRestroomLocation(fmt.Sprint(id), fmt.Sprint(newLocation))
 
 	c.JSON(http.StatusOK, gin.H{
-		"message":  "Update restroom location!",
+		"message":  "Update restroom location success!",
 		"restroom": model.GetRestroom(fmt.Sprint(id)),
 	})
 }

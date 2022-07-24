@@ -38,3 +38,7 @@ func UpdateRestroomLocation(id string, location string) {
 	restroom.SetLocation(location)
 	restrooms[id] = restroom
 }
+
+func DeleteRestroom(id string) {
+	delete(restrooms, id)
+}
