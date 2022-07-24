@@ -7,6 +7,7 @@ var (
 	toilets                map[string]Toilet
 	undeployedToiletIdList []string
 	nextRestroomId         int
+	nextToiletId           int
 )
 
 func Setup() {
@@ -14,6 +15,7 @@ func Setup() {
 	toilets = map[string]Toilet{}
 	undeployedToiletIdList = []string{}
 	nextRestroomId = 1
+	nextToiletId = 1
 }
 
 func GetAllRestrooms() map[string]Restroom {
@@ -31,4 +33,17 @@ func RegisterRestroom(restroom Restroom) {
 func GenerateNextRestroomId() string {
 	defer func() { nextRestroomId += 1 }()
 	return strconv.Itoa(nextRestroomId)
+}
+
+func GetToilet(id string) Toilet {
+	return toilets[id]
+}
+
+func RegisterToilet(toilet Toilet) {
+	toilets[toilet.GetId()] = toilet
+}
+
+func GenerateNextToiletId() string {
+	defer func() { nextToiletId += 1 }()
+	return strconv.Itoa(nextToiletId)
 }
