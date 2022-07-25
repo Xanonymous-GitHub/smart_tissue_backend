@@ -37,6 +37,20 @@ func GetToilet(id string) Toilet {
 	return toilets[id]
 }
 
+func IsUndeployedToiletExist(toiletId string) bool {
+	for i := 0; i < len(undeployedToiletIdList); i++ {
+		if undeployedToiletIdList[i] == toiletId {
+			return true
+		}
+	}
+	return false
+}
+
+func IsRestroomExist(restrooomId string) bool {
+	_, isExist := restrooms[restrooomId]
+	return isExist
+}
+
 func RegisterToilet(toilet Toilet, restroomId string) {
 	toilets[toilet.GetId()] = toilet
 	restroom := restrooms[restroomId]

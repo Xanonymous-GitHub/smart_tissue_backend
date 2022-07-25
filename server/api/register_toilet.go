@@ -12,10 +12,41 @@ func RegisterToilet(c *gin.Context) {
 	json := make(map[string]interface{})
 	c.BindJSON(&json)
 
-	toiletId := json["toiletId"]
-	location := json["location"]
+	toiletId, hasToiletId := json["toiletId"]
+	if !hasToiletId {
+		c.JSON(http.StatusBadRequest, gin.H{
+			"message": "Fail to register, please send the id of the toilet!",
+		})
+	}
+
+	location, hasLocation := json["location"]
+	if !hasLocation {
+		c.JSON(http.StatusBadRequest, gin.H{
+			"message": "Fail to register, please send the location of the toilet!",
+		})
+	}
+	restroomId, hasRestroomId := json["restroomId"]
+	if !hasRestroomId {
+		c.JSON(http.StatusBadRequest, gin.H{
+			"message": "Fail to register, please send the id of the restroom!",
+		})
+	}
+
+	isUndeployedToiletExist := model.IsUndeployedToiletExist(fmt.Sprint(toiletId))
+	if !isUndeployedToiletExist {
+		c.JSON(http.StatusBadRequest, gin.H{
+			"message": "Fail to register, toilet has been deployed or toilet not exist!",
+		})
+	}
+
+	isRestroomExist := model.IsRestroomExist(fmt.Sprint(restroomId))
+	if !isRestroomExist {
+		c.JSON(http.StatusBadRequest, gin.H{
+			"message": "Fail to register, restroom not exist!",
+		})
+	}
+	
 	toilet := model.Toilet{Id: fmt.Sprint(toiletId), Percentage: 0.0, Location: fmt.Sprint(location), State: model.ToiletState("MAINTAINING")}
-	restroomId := json["restroomId"]
 
 	model.RegisterToilet(toilet, fmt.Sprint(restroomId))
 
