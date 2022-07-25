@@ -7,7 +7,6 @@ var (
 	toilets                map[string]Toilet
 	undeployedToiletIdList []string
 	nextRestroomId         int
-	nextToiletId           int
 )
 
 func Setup() {
@@ -15,7 +14,6 @@ func Setup() {
 	toilets = map[string]Toilet{}
 	undeployedToiletIdList = []string{}
 	nextRestroomId = 1
-	nextToiletId = 1
 }
 
 func GetAllRestrooms() map[string]Restroom {
@@ -39,12 +37,20 @@ func GetToilet(id string) Toilet {
 	return toilets[id]
 }
 
-func RegisterToilet(toilet Toilet) {
+func RegisterToilet(toilet Toilet, restroomId string) {
 	toilets[toilet.GetId()] = toilet
-	undeployedToiletIdList = append(undeployedToiletIdList, toilet.GetId())
+	restroom := restrooms[restroomId]
+	restroom.AddToiletId(toilet.GetId())
+	restrooms[restroom.GetId()] = restroom
+	undeployedToiletIdList = RemoveIdFromUndeployedToiletId(toilet.GetId())
 }
 
-func GenerateNextToiletId() string {
-	defer func() { nextToiletId += 1 }()
-	return strconv.Itoa(nextToiletId)
+func RemoveIdFromUndeployedToiletId(toiletId string) []string {
+	for i := 0; i < len(undeployedToiletIdList); i++ {
+		if undeployedToiletIdList[i] == toiletId {
+			undeployedToiletIdList[i] = undeployedToiletIdList[len(undeployedToiletIdList) - 1]
+			return undeployedToiletIdList[:len(undeployedToiletIdList) - 1]
+		}
+	}
+	return undeployedToiletIdList
 }
