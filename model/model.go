@@ -37,10 +37,11 @@ func GetToilet(id string) Toilet {
 	return toilets[id]
 }
 
-func UpdateToiletData(toilet Toilet) bool {
-	if _, ok := toilets[toilet.GetId()]; ok {
-		toilets[toilet.GetId()] = toilet
-		return true
-	}
-	return false
+func IsToiletExist(toilet Toilet) bool {
+	_, isExist := toilets[toilet.GetId()]
+	return isExist
+}
+
+func UpdateToiletData(toilet Toilet) {
+	toilets[toilet.GetId()] = toilet
 }
