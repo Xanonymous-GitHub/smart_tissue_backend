@@ -19,7 +19,7 @@ func RemoveToilet(c *gin.Context) {
 			"message": "Delete toilet success!",
 		})
 	} else {
-		c.JSON(http.StatusNotFound, gin.H{
+		c.JSON(http.StatusBadRequest, gin.H{
 			"message": "Toilet not exist!",
 		})
 	}
