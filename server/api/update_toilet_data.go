@@ -27,7 +27,7 @@ func UpdateToiletData(c *gin.Context) {
 			"toilet":  model.GetToilet(fmt.Sprint(id)),
 		})
 	} else {
-		c.JSON(http.StatusNotFound, gin.H{
+		c.JSON(http.StatusBadRequest, gin.H{
 			"message": "Toilet not exist!",
 		})
 	}
