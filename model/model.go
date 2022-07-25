@@ -44,3 +44,8 @@ func GenerateNextRestroomId() string {
 	defer func() { nextRestroomId += 1 }()
 	return strconv.Itoa(nextRestroomId)
 }
+
+func IsRestroomExists(id string) bool {
+	_, exists := restrooms[id]
+	return exists
+}

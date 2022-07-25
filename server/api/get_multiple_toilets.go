@@ -12,7 +12,21 @@ func GetMultipleToilets(c *gin.Context) {
 	json := make(map[string]interface{})
 	c.BindJSON(&json)
 
-	id := json["id"]
+	id, hasId := json["id"]
+	if !hasId {
+		c.JSON(http.StatusBadRequest, gin.H{
+			"message": "Failed to get, please send the id of the restroom.",
+		})
+		return
+	}
+
+	if !model.IsRestroomExists(fmt.Sprint(id)) {
+		c.JSON(http.StatusBadRequest, gin.H{
+			"message": "Failed to get, please register a restroom or request an existing restroom.",
+		})
+		return
+	}
+
 	toilets := model.GetMultipleToilets(fmt.Sprint(id))
 
 	c.JSON(http.StatusOK, gin.H{
