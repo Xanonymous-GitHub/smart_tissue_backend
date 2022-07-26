@@ -11,9 +11,10 @@ import (
 func RemoveToilet(c *gin.Context) {
 	json := make(map[string]interface{})
 	c.BindJSON(&json)
-	id := json["id"]
-	isExist := model.IsToiletExist(fmt.Sprint(id))
-	model.RemoveToilet(fmt.Sprint(id))
+	toiletId := json["toiletId"]
+	isExist := model.IsToiletExist(fmt.Sprint(toiletId))
+
+	model.RemoveToilet(fmt.Sprint(toiletId))
 
 	if isExist {
 		c.JSON(http.StatusOK, gin.H{

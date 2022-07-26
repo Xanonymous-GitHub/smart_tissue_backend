@@ -38,6 +38,12 @@ func IsToiletExist(toiletId string) bool {
 	return isExist
 }
 
-func RemoveToilet(id string) {
-	delete(toilets, id)
+func IsRestroomExist(restrooomId string) bool {
+	_, isExist := restrooms[restrooomId]
+	return isExist
+}
+
+func RemoveToilet(toiletId string) {
+	delete(toilets, toiletId)
+	undeployedToiletIdList = append(undeployedToiletIdList, toiletId)
 }
