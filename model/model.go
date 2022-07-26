@@ -37,8 +37,8 @@ func GetToilet(id string) Toilet {
 	return toilets[id]
 }
 
-func IsToiletExist(toilet Toilet) bool {
-	_, isExist := toilets[toilet.GetId()]
+func IsToiletExist(toiletId string) bool {
+	_, isExist := toilets[toiletId]
 	return isExist
 }
 
