@@ -13,7 +13,13 @@ func RegisterRestroom(c *gin.Context) {
 	c.BindJSON(&json)
 
 	id := model.GenerateNextRestroomId()
-	location := json["location"]
+	location, hasLocation := json["location"]
+	if !hasLocation {
+		c.JSON(http.StatusBadRequest, gin.H{
+			"message": "Failed to register, please send the location of this restroom.",
+		})
+		return
+	}
 	restroom := model.Restroom{Id: id, Location: fmt.Sprint(location), ToiletIdList: []string{}}
 	model.RegisterRestroom(restroom)
 
