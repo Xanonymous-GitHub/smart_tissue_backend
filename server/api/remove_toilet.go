@@ -23,13 +23,13 @@ func RemoveToilet(c *gin.Context) {
 			"message": "Fail to remove, please send the id of the restroom!",
 		})
 	}
-	isToiletExist := model.IsToiletExist(fmt.Sprint(toiletId))
+	isToiletExist := model.IsToiletExists(fmt.Sprint(toiletId))
 	if !isToiletExist {
 		c.JSON(http.StatusBadRequest, gin.H{
 			"message": "Fail to remove, toilet not exist or has not been registered!",
 		})
 	}
-	isRestroomExist := model.IsRestroomExist(fmt.Sprint(restroomId))
+	isRestroomExist := model.IsRestroomExists(fmt.Sprint(restroomId))
 	if !isRestroomExist {
 		c.JSON(http.StatusBadRequest, gin.H{
 			"message": "Fail to remove, restroom not exist!",

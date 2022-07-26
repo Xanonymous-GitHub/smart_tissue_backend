@@ -33,12 +33,12 @@ func GenerateNextRestroomId() string {
 	return strconv.Itoa(nextRestroomId)
 }
 
-func IsToiletExist(toiletId string) bool {
+func IsToiletExists(toiletId string) bool {
 	_, isExist := toilets[toiletId]
 	return isExist
 }
 
-func IsRestroomExist(restrooomId string) bool {
+func IsRestroomExists(restrooomId string) bool {
 	_, isExist := restrooms[restrooomId]
 	return isExist
 }
