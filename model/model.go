@@ -33,10 +33,11 @@ func GenerateNextRestroomId() string {
 	return strconv.Itoa(nextRestroomId)
 }
 
-func RemoveToilet(id string) bool {
-	if _, ok := toilets[id]; ok {
-		delete(toilets, id)
-		return true
-	}
-	return false
+func IsToiletExist(toiletId string) bool {
+	_, isExist := toilets[toiletId]
+	return isExist
+}
+
+func RemoveToilet(id string) {
+	delete(toilets, id)
 }
