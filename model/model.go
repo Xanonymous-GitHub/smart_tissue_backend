@@ -43,6 +43,11 @@ func IsRestroomExist(restrooomId string) bool {
 	return isExist
 }
 
+func IsToiletIdInRestroom(toiletId string, restrooomId string) bool {
+	restroom := restrooms[restrooomId]
+	return restroom.IsToiletIdInList(toiletId)
+}
+
 func RemoveToilet(toiletId string, restroomId string) {
 	delete(toilets, toiletId)
 	restroom := restrooms[restroomId]

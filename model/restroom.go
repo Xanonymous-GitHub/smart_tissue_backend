@@ -19,3 +19,12 @@ func (restroom *Restroom) RemoveIdFromToiletIdList(toiletId string) []string {
 	}
 	return restroom.ToiletIdList
 }
+
+func (restroom *Restroom) IsToiletIdInList(toiletId string) bool {
+	for i := 0; i < len(restroom.ToiletIdList); i++ {
+		if restroom.ToiletIdList[i] == toiletId {
+			return true
+		}
+	}
+	return false
+}
