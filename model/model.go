@@ -43,7 +43,10 @@ func IsRestroomExist(restrooomId string) bool {
 	return isExist
 }
 
-func RemoveToilet(toiletId string) {
+func RemoveToilet(toiletId string, restroomId string) {
 	delete(toilets, toiletId)
+	restroom := restrooms[restroomId]
+	restroom.RemoveIdFromToiletIdList(toiletId)
+	restrooms[restroomId] = restroom
 	undeployedToiletIdList = append(undeployedToiletIdList, toiletId)
 }
