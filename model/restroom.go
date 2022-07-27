@@ -9,3 +9,11 @@ type Restroom struct {
 func (restroom *Restroom) GetId() string {
 	return restroom.Id
 }
+
+func (restroom *Restroom) GetLocation() string {
+	return restroom.Location
+}
+
+func (restroom *Restroom) SetLocation(location string) {
+	restroom.Location = location
+}
