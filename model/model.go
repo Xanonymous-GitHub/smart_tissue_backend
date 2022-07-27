@@ -24,6 +24,18 @@ func GetRestroom(id string) Restroom {
 	return restrooms[id]
 }
 
+func GetMultipleToilets(id string) []Toilet {
+	multipleToilets := []Toilet{}
+	restroom := restrooms[id]
+	toiletIdList := restroom.GetToiletIdList()
+
+	for _, toiletId := range toiletIdList {
+		multipleToilets = append(multipleToilets, toilets[toiletId])
+	}
+
+	return multipleToilets
+}
+
 func GetUndeployedToiletIdList() []string {
 	return undeployedToiletIdList
 }

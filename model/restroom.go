@@ -10,6 +10,10 @@ func (restroom *Restroom) GetId() string {
 	return restroom.Id
 }
 
+func (restroom *Restroom) GetToiletIdList() []string {
+	return restroom.ToiletIdList
+}
+  
 func (restroom *Restroom) GetLocation() string {
 	return restroom.Location
 }
