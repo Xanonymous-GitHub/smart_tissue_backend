@@ -13,3 +13,11 @@ func (restroom *Restroom) GetId() string {
 func (restroom *Restroom) GetToiletIdList() []string {
 	return restroom.ToiletIdList
 }
+  
+func (restroom *Restroom) GetLocation() string {
+	return restroom.Location
+}
+
+func (restroom *Restroom) SetLocation(location string) {
+	restroom.Location = location
+}

@@ -36,6 +36,10 @@ func GetMultipleToilets(id string) []Toilet {
 	return multipleToilets
 }
 
+func GetUndeployedToiletIdList() []string {
+	return undeployedToiletIdList
+}
+
 func RegisterRestroom(restroom Restroom) {
 	restrooms[restroom.GetId()] = restroom
 }
@@ -48,4 +52,14 @@ func GenerateNextRestroomId() string {
 func IsRestroomExists(id string) bool {
 	_, exists := restrooms[id]
 	return exists
+}
+
+func UpdateRestroomLocation(id string, location string) {
+	restroom := restrooms[id]
+	restroom.SetLocation(location)
+	restrooms[id] = restroom
+}
+
+func DeleteRestroom(id string) {
+	delete(restrooms, id)
 }
