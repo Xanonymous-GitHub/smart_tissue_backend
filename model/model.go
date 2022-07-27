@@ -25,15 +25,15 @@ func GetRestroom(id string) Restroom {
 }
 
 func GetMultipleToilets(id string) []Toilet {
-	multipleToilet := []Toilet{}
+	multipleToilets := []Toilet{}
 	restroom := restrooms[id]
 	toiletIdList := restroom.GetToiletIdList()
 
 	for _, toiletId := range toiletIdList {
-		multipleToilet = append(multipleToilet, toilets[toiletId])
+		multipleToilets = append(multipleToilets, toilets[toiletId])
 	}
 
-	return multipleToilet
+	return multipleToilets
 }
 
 func RegisterRestroom(restroom Restroom) {
