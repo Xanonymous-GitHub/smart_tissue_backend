@@ -11,9 +11,9 @@ func (restroom *Restroom) GetId() string {
 }
 
 func (restroom *Restroom) RemoveIdFromToiletIdList(toiletId string) []string {
-	for i := 0; i < len(restroom.ToiletIdList); i++ {
-		if restroom.ToiletIdList[i] == toiletId {
-			restroom.ToiletIdList[i] = restroom.ToiletIdList[len(restroom.ToiletIdList) - 1]
+	for toiletIndex, currentToiletId := range restroom.ToiletIdList{
+		if currentToiletId == toiletId {
+			restroom.ToiletIdList[toiletIndex] = restroom.ToiletIdList[len(restroom.ToiletIdList) - 1]
 			return restroom.ToiletIdList[:len(restroom.ToiletIdList) - 1]
 		}
 	}
@@ -21,8 +21,8 @@ func (restroom *Restroom) RemoveIdFromToiletIdList(toiletId string) []string {
 }
 
 func (restroom *Restroom) IsToiletIdInList(toiletId string) bool {
-	for i := 0; i < len(restroom.ToiletIdList); i++ {
-		if restroom.ToiletIdList[i] == toiletId {
+	for _, currentToiletId := range restroom.ToiletIdList{
+		if currentToiletId == toiletId {
 			return true
 		}
 	}
