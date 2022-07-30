@@ -20,13 +20,6 @@ func RegisterToilet(c *gin.Context) {
 		return
 	}
 
-	location, hasLocation := json["location"]
-	if !hasLocation {
-		c.JSON(http.StatusBadRequest, gin.H{
-			"message": "Fail to register, please send the location of the toilet!",
-		})
-		return
-	}
 	restroomId, hasRestroomId := json["restroomId"]
 	if !hasRestroomId {
 		c.JSON(http.StatusBadRequest, gin.H{
