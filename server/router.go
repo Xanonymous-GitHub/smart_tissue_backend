@@ -11,6 +11,6 @@ func SetupRouter() {
 
 	router.GET("/restrooms", api.GetAllRestrooms)
 	router.POST("/restroom", api.RegisterRestroom)
-	router.PUT("/updateToiletData", api.UpdateToiletData)
+	router.PUT("/toilet", api.UpdateToiletData)
 	_ = router.Run()
 }
