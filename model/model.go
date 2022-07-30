@@ -38,8 +38,8 @@ func GetToilet(id string) Toilet {
 }
 
 func IsUndeployedToiletExist(toiletId string) bool {
-	for i := 0; i < len(undeployedToiletIdList); i++ {
-		if undeployedToiletIdList[i] == toiletId {
+	for _, currentToiletId := range undeployedToiletIdList {
+		if currentToiletId == toiletId {
 			return true
 		}
 	}
@@ -62,8 +62,8 @@ func RegisterToilet(toilet Toilet, restroomId string) {
 func RemoveIdFromUndeployedToiletId(toiletId string) []string {
 	for i := 0; i < len(undeployedToiletIdList); i++ {
 		if undeployedToiletIdList[i] == toiletId {
-			undeployedToiletIdList[i] = undeployedToiletIdList[len(undeployedToiletIdList) - 1]
-			return undeployedToiletIdList[:len(undeployedToiletIdList) - 1]
+			undeployedToiletIdList[i] = undeployedToiletIdList[len(undeployedToiletIdList)-1]
+			return undeployedToiletIdList[:len(undeployedToiletIdList)-1]
 		}
 	}
 	return undeployedToiletIdList
