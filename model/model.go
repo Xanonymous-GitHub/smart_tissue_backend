@@ -51,12 +51,11 @@ func IsRestroomExist(restrooomId string) bool {
 	return isExist
 }
 
-func RegisterToilet(toilet Toilet, restroomId string) {
-	toilets[toilet.GetId()] = toilet
+func RegisterToilet(toiletId string, restroomId string) {
 	restroom := restrooms[restroomId]
-	restroom.AddToiletId(toilet.GetId())
+	restroom.AddToiletId(toiletId)
 	restrooms[restroom.GetId()] = restroom
-	undeployedToiletIdList = RemoveIdFromUndeployedToiletId(toilet.GetId())
+	undeployedToiletIdList = RemoveIdFromUndeployedToiletId(toiletId)
 }
 
 func RemoveIdFromUndeployedToiletId(toiletId string) []string {

@@ -50,10 +50,8 @@ func RegisterToilet(c *gin.Context) {
 		})
 		return
 	}
-	
-	toilet := model.Toilet{Id: fmt.Sprint(toiletId), Percentage: 0.0, Location: fmt.Sprint(location), State: model.ToiletState("MAINTAINING")}
 
-	model.RegisterToilet(toilet, fmt.Sprint(restroomId))
+	model.RegisterToilet(fmt.Sprint(toiletId), fmt.Sprint(restroomId))
 
 	c.JSON(http.StatusCreated, gin.H{
 		"message": "Register toilet success!",
