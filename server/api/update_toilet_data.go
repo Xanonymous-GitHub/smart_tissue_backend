@@ -41,10 +41,18 @@ func UpdateToiletData(c *gin.Context) {
 		})
 		return
 	}
-	percentage, _ := strconv.ParseFloat(fmt.Sprint(jsonPercentage), 32)
+	percentage, error := strconv.ParseFloat(fmt.Sprint(jsonPercentage), 32)
+
+	if error != nil {
+		c.JSON(http.StatusBadRequest, gin.H{
+			"message": "Fail to update, can not parse percentage to type float32!",
+		})
+		return
+	}
+
 	toilet := model.Toilet{Id: fmt.Sprint(id), Percentage: float32(percentage), Location: fmt.Sprint(location), State: model.ToiletState(fmt.Sprint(state))}
-	isExist := model.IsToiletExist(toilet.GetId())
-	if !isExist {
+	isToiletExist := model.IsToiletExist(toilet.GetId())
+	if !isToiletExist {
 		c.JSON(http.StatusBadRequest, gin.H{
 			"message": "Toilet not exist!",
 		})
