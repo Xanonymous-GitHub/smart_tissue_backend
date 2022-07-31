@@ -1,6 +1,9 @@
 package model
 
-import "strconv"
+import (
+	"math"
+	"strconv"
+)
 
 var (
 	restrooms              map[string]Restroom
@@ -22,6 +25,10 @@ func GetAllRestrooms() map[string]Restroom {
 
 func GetRestroom(id string) Restroom {
 	return restrooms[id]
+}
+
+func GetSingleToilet(toiletId string) Toilet {
+	return toilets[toiletId]
 }
 
 func GetMultipleToilets(id string) []Toilet {
@@ -62,4 +69,18 @@ func UpdateRestroomLocation(id string, location string) {
 
 func DeleteRestroom(id string) {
 	delete(restrooms, id)
+}
+
+func UploadTissueBoxData(toilet Toilet) {
+	currentToilet, exists := toilets[toilet.Id]
+
+	if exists {
+		toilet.Location = currentToilet.Location
+	} else {
+		undeployedToiletIdList = append(undeployedToiletIdList, toilet.Id)
+	}
+
+	toilet.Percentage = math.Round(toilet.Distance/toilet.MaxDistance*10000) / 10000
+
+	toilets[toilet.Id] = toilet
 }
