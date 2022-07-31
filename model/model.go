@@ -34,7 +34,7 @@ func GetSingleToilet(toiletId string) Toilet {
 func GetToiletsFromRestroom(id string) []Toilet {
 	restroomToilets := []Toilet{}
 	restroom := restrooms[id]
-	toiletIdList := restroom.GetToiletIdList()
+	toiletIdList := restroom.ToiletIdList
 
 	for _, toiletId := range toiletIdList {
 		restroomToilets = append(restroomToilets, toilets[toiletId])
@@ -48,7 +48,7 @@ func GetUndeployedToiletIdList() []string {
 }
 
 func RegisterRestroom(restroom Restroom) {
-	restrooms[restroom.GetId()] = restroom
+	restrooms[restroom.Id] = restroom
 }
 
 func GenerateNextRestroomId() string {
@@ -63,7 +63,7 @@ func IsRestroomExists(id string) bool {
 
 func UpdateRestroomLocation(id string, location string) {
 	restroom := restrooms[id]
-	restroom.SetLocation(location)
+	restroom.Location = location
 	restrooms[id] = restroom
 }
 
