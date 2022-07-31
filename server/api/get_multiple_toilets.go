@@ -27,7 +27,7 @@ func GetMultipleToilets(c *gin.Context) {
 		return
 	}
 
-	multipleToilets := model.GetMultipleToilets(fmt.Sprint(id))
+	multipleToilets := model.GetToiletsFromRestroom(fmt.Sprint(id))
 
 	c.JSON(http.StatusOK, gin.H{
 		"toilets": multipleToilets,

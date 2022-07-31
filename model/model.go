@@ -31,16 +31,16 @@ func GetSingleToilet(toiletId string) Toilet {
 	return toilets[toiletId]
 }
 
-func GetMultipleToilets(id string) []Toilet {
-	multipleToilets := []Toilet{}
+func GetToiletsFromRestroom(id string) []Toilet {
+	restroomToilets := []Toilet{}
 	restroom := restrooms[id]
 	toiletIdList := restroom.GetToiletIdList()
 
 	for _, toiletId := range toiletIdList {
-		multipleToilets = append(multipleToilets, toilets[toiletId])
+		restroomToilets = append(restroomToilets, toilets[toiletId])
 	}
 
-	return multipleToilets
+	return restroomToilets
 }
 
 func GetUndeployedToiletIdList() []string {
