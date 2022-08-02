@@ -36,7 +36,7 @@ func RegisterToilet(c *gin.Context) {
 		return
 	}
 
-	isRestroomExist := model.IsRestroomExist(fmt.Sprint(restroomId))
+	isRestroomExist := model.IsRestroomExists(fmt.Sprint(restroomId))
 	if !isRestroomExist {
 		c.JSON(http.StatusBadRequest, gin.H{
 			"message": "Fail to register, restroom not exist!",

@@ -46,9 +46,19 @@ func IsUndeployedToiletExist(toiletId string) bool {
 	return false
 }
 
-func IsRestroomExist(restrooomId string) bool {
+func IsToiletExists(toiletId string) bool {
+	_, isExist := toilets[toiletId]
+	return isExist
+}
+
+func IsRestroomExists(restrooomId string) bool {
 	_, isExist := restrooms[restrooomId]
 	return isExist
+}
+
+func IsToiletIdInRestroom(toiletId string, restrooomId string) bool {
+	restroom := restrooms[restrooomId]
+	return restroom.IsToiletIdInList(toiletId)
 }
 
 func RegisterToilet(toiletId string, restroomId string) {
@@ -66,4 +76,11 @@ func RemoveIdFromUndeployedToiletId(toiletId string) []string {
 		}
 	}
 	return undeployedToiletIdList
+}
+
+func RemoveToilet(toiletId string, restroomId string) {
+	restroom := restrooms[restroomId]
+	restroom.RemoveIdFromToiletIdList(toiletId)
+	restrooms[restroomId] = restroom
+	undeployedToiletIdList = append(undeployedToiletIdList, toiletId)
 }
