@@ -1,6 +1,9 @@
 package model
 
-import "strconv"
+import (
+	"math"
+	"strconv"
+)
 
 var (
 	restrooms              map[string]Restroom
@@ -24,16 +27,20 @@ func GetRestroom(id string) Restroom {
 	return restrooms[id]
 }
 
-func GetMultipleToilets(id string) []Toilet {
-	multipleToilets := []Toilet{}
+func GetSingleToilet(toiletId string) Toilet {
+	return toilets[toiletId]
+}
+
+func GetToiletsFromRestroom(id string) []Toilet {
+	restroomToilets := []Toilet{}
 	restroom := restrooms[id]
-	toiletIdList := restroom.GetToiletIdList()
+	toiletIdList := restroom.ToiletIdList
 
 	for _, toiletId := range toiletIdList {
-		multipleToilets = append(multipleToilets, toilets[toiletId])
+		restroomToilets = append(restroomToilets, toilets[toiletId])
 	}
 
-	return multipleToilets
+	return restroomToilets
 }
 
 func GetUndeployedToiletIdList() []string {
@@ -41,7 +48,7 @@ func GetUndeployedToiletIdList() []string {
 }
 
 func RegisterRestroom(restroom Restroom) {
-	restrooms[restroom.GetId()] = restroom
+	restrooms[restroom.Id] = restroom
 }
 
 func GenerateNextRestroomId() string {
@@ -56,10 +63,24 @@ func IsRestroomExists(id string) bool {
 
 func UpdateRestroomLocation(id string, location string) {
 	restroom := restrooms[id]
-	restroom.SetLocation(location)
+	restroom.Location = location
 	restrooms[id] = restroom
 }
 
 func DeleteRestroom(id string) {
 	delete(restrooms, id)
+}
+
+func UploadTissueBoxData(toilet Toilet) {
+	currentToilet, exists := toilets[toilet.Id]
+
+	if exists {
+		toilet.Location = currentToilet.Location
+	} else {
+		undeployedToiletIdList = append(undeployedToiletIdList, toilet.Id)
+	}
+
+	toilet.Percentage = math.Round(toilet.Distance/toilet.MaxDistance*10000) / 10000
+
+	toilets[toilet.Id] = toilet
 }
