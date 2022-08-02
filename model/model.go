@@ -84,3 +84,7 @@ func RemoveToilet(toiletId string, restroomId string) {
 	restrooms[restroomId] = restroom
 	undeployedToiletIdList = append(undeployedToiletIdList, toiletId)
 }
+
+func UpdateToiletData(toilet Toilet) {
+	toilets[toilet.GetId()] = toilet
+}
