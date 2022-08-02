@@ -13,8 +13,8 @@ func UpdateToiletData(c *gin.Context) {
 	json := make(map[string]interface{})
 	c.BindJSON(&json)
 
-	id, hasId := json["id"]
-	if !hasId {
+	toiletId, hasToiletId := json["toiletId"]
+	if !hasToiletId {
 		c.JSON(http.StatusBadRequest, gin.H{
 			"message": "Fail to update, please send the id of the target toilet!",
 		})
@@ -50,7 +50,7 @@ func UpdateToiletData(c *gin.Context) {
 		return
 	}
 
-	toilet := model.Toilet{Id: fmt.Sprint(id), Percentage: float32(percentage), Location: fmt.Sprint(location), State: model.ToiletState(fmt.Sprint(state))}
+	toilet := model.Toilet{Id: fmt.Sprint(toiletId), Percentage: float32(percentage), Location: fmt.Sprint(location), State: model.ToiletState(fmt.Sprint(state))}
 	isToiletExist := model.IsToiletExists(toilet.GetId())
 	if !isToiletExist {
 		c.JSON(http.StatusBadRequest, gin.H{
@@ -62,6 +62,6 @@ func UpdateToiletData(c *gin.Context) {
 	model.UpdateToiletData(toilet)
 	c.JSON(http.StatusOK, gin.H{
 		"message": "Update toilet success!",
-		"toilet":  model.GetToilet(fmt.Sprint(id)),
+		"toilet":  model.GetToilet(fmt.Sprint(toiletId)),
 	})
 }
