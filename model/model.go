@@ -56,6 +56,57 @@ func GenerateNextRestroomId() string {
 	return strconv.Itoa(nextRestroomId)
 }
 
+func GetToilet(id string) Toilet {
+	return toilets[id]
+}
+
+func IsUndeployedToiletExist(toiletId string) bool {
+	for _, currentToiletId := range undeployedToiletIdList {
+		if currentToiletId == toiletId {
+			return true
+		}
+	}
+	return false
+}
+
+func IsToiletExists(toiletId string) bool {
+	_, isExist := toilets[toiletId]
+	return isExist
+}
+
+func IsToiletIdInRestroom(toiletId string, restrooomId string) bool {
+	restroom := restrooms[restrooomId]
+	return restroom.IsToiletIdInList(toiletId)
+}
+
+func RegisterToilet(toiletId string, restroomId string) {
+	restroom := restrooms[restroomId]
+	restroom.AddToiletId(toiletId)
+	restrooms[restroomId] = restroom
+	undeployedToiletIdList = RemoveIdFromUndeployedToiletId(toiletId)
+}
+
+func RemoveIdFromUndeployedToiletId(toiletId string) []string {
+	for toiletIndex, currentToiletId := range undeployedToiletIdList {
+		if currentToiletId == toiletId {
+			undeployedToiletIdList[toiletIndex] = undeployedToiletIdList[len(undeployedToiletIdList)-1]
+			return undeployedToiletIdList[:len(undeployedToiletIdList)-1]
+		}
+	}
+	return undeployedToiletIdList
+}
+
+func RemoveToilet(toiletId string, restroomId string) {
+	restroom := restrooms[restroomId]
+	restroom.RemoveIdFromToiletIdList(toiletId)
+	restrooms[restroomId] = restroom
+	undeployedToiletIdList = append(undeployedToiletIdList, toiletId)
+}
+
+func UpdateToiletData(toilet Toilet) {
+	toilets[toilet.GetId()] = toilet
+}
+
 func IsRestroomExists(id string) bool {
 	_, exists := restrooms[id]
 	return exists
