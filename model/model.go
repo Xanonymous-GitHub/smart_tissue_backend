@@ -1,6 +1,9 @@
 package model
 
-import "strconv"
+import (
+	"math"
+	"strconv"
+)
 
 var (
 	restrooms              map[string]Restroom
@@ -24,8 +27,28 @@ func GetRestroom(id string) Restroom {
 	return restrooms[id]
 }
 
+func GetSingleToilet(toiletId string) Toilet {
+	return toilets[toiletId]
+}
+
+func GetToiletsFromRestroom(id string) []Toilet {
+	restroomToilets := []Toilet{}
+	restroom := restrooms[id]
+	toiletIdList := restroom.ToiletIdList
+
+	for _, toiletId := range toiletIdList {
+		restroomToilets = append(restroomToilets, toilets[toiletId])
+	}
+
+	return restroomToilets
+}
+
+func GetUndeployedToiletIdList() []string {
+	return undeployedToiletIdList
+}
+
 func RegisterRestroom(restroom Restroom) {
-	restrooms[restroom.GetId()] = restroom
+	restrooms[restroom.Id] = restroom
 }
 
 func GenerateNextRestroomId() string {
@@ -48,11 +71,6 @@ func IsUndeployedToiletExist(toiletId string) bool {
 
 func IsToiletExists(toiletId string) bool {
 	_, isExist := toilets[toiletId]
-	return isExist
-}
-
-func IsRestroomExists(restrooomId string) bool {
-	_, isExist := restrooms[restrooomId]
 	return isExist
 }
 
@@ -87,4 +105,33 @@ func RemoveToilet(toiletId string, restroomId string) {
 
 func UpdateToiletData(toilet Toilet) {
 	toilets[toilet.GetId()] = toilet
+}
+
+func IsRestroomExists(id string) bool {
+	_, exists := restrooms[id]
+	return exists
+}
+
+func UpdateRestroomLocation(id string, location string) {
+	restroom := restrooms[id]
+	restroom.Location = location
+	restrooms[id] = restroom
+}
+
+func DeleteRestroom(id string) {
+	delete(restrooms, id)
+}
+
+func UploadTissueBoxData(toilet Toilet) {
+	currentToilet, exists := toilets[toilet.Id]
+
+	if exists {
+		toilet.Location = currentToilet.Location
+	} else {
+		undeployedToiletIdList = append(undeployedToiletIdList, toilet.Id)
+	}
+
+	toilet.Percentage = math.Round(toilet.Distance/toilet.MaxDistance*10000) / 10000
+
+	toilets[toilet.Id] = toilet
 }
