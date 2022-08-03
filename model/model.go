@@ -64,7 +64,7 @@ func IsToiletIdInRestroom(toiletId string, restrooomId string) bool {
 func RegisterToilet(toiletId string, restroomId string) {
 	restroom := restrooms[restroomId]
 	restroom.AddToiletId(toiletId)
-	restrooms[restroom.GetId()] = restroom
+	restrooms[restroomId] = restroom
 	undeployedToiletIdList = RemoveIdFromUndeployedToiletId(toiletId)
 }
 
