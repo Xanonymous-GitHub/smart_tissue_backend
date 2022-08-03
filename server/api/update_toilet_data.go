@@ -20,7 +20,7 @@ func UpdateToiletData(c *gin.Context) {
 		})
 		return
 	}
-	jsonPercentage, hasPercentage := json["percentage"]
+	rawPercentage, hasPercentage := json["percentage"]
 	if !hasPercentage {
 		c.JSON(http.StatusBadRequest, gin.H{
 			"message": "Fail to update, please send the new percentage of the toilet!",
@@ -41,7 +41,7 @@ func UpdateToiletData(c *gin.Context) {
 		})
 		return
 	}
-	percentage, error := strconv.ParseFloat(fmt.Sprint(jsonPercentage), 32)
+	percentage, error := strconv.ParseFloat(fmt.Sprint(rawPercentage), 32)
 
 	if error != nil {
 		c.JSON(http.StatusBadRequest, gin.H{
