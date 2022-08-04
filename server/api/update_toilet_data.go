@@ -52,7 +52,7 @@ func UpdateToiletData(c *gin.Context) {
 		return
 	}
 
-	toilet := model.Toilet{Id: fmt.Sprint(toiletId), Percentage: parse32(percentage), Location: fmt.Sprint(location), State: model.ToiletState(fmt.Sprint(state))}
+	toilet := model.Toilet{Id: fmt.Sprint(toiletId), Percentage: percentage, Location: fmt.Sprint(location), State: model.ToiletState(fmt.Sprint(state))}
 	isToiletExist := model.IsToiletExists(toilet.Id)
 	if !isToiletExist {
 		c.JSON(http.StatusBadRequest, gin.H{
