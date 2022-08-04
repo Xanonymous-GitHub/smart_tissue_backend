@@ -11,6 +11,7 @@ import (
 func RemoveToilet(c *gin.Context) {
 	json := make(map[string]interface{})
 	c.BindJSON(&json)
+
 	toiletId, hasToiletId := json["toiletId"]
 	if !hasToiletId {
 		c.JSON(http.StatusBadRequest, gin.H{
@@ -18,6 +19,7 @@ func RemoveToilet(c *gin.Context) {
 		})
 		return
 	}
+
 	restroomId, hasRestroomId := json["restroomId"]
 	if !hasRestroomId {
 		c.JSON(http.StatusBadRequest, gin.H{
@@ -25,6 +27,7 @@ func RemoveToilet(c *gin.Context) {
 		})
 		return
 	}
+
 	isToiletExist := model.IsToiletExists(fmt.Sprint(toiletId))
 	if !isToiletExist {
 		c.JSON(http.StatusBadRequest, gin.H{
@@ -32,6 +35,7 @@ func RemoveToilet(c *gin.Context) {
 		})
 		return
 	}
+
 	isRestroomExist := model.IsRestroomExists(fmt.Sprint(restroomId))
 	if !isRestroomExist {
 		c.JSON(http.StatusBadRequest, gin.H{
@@ -39,6 +43,7 @@ func RemoveToilet(c *gin.Context) {
 		})
 		return
 	}
+
 	isToiletIdInRestroom := model.IsToiletIdInRestroom(fmt.Sprint(toiletId), fmt.Sprint(restroomId))
 	if !isToiletIdInRestroom {
 		c.JSON(http.StatusBadRequest, gin.H{

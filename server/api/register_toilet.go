@@ -48,6 +48,6 @@ func RegisterToilet(c *gin.Context) {
 
 	c.JSON(http.StatusCreated, gin.H{
 		"message": "Register toilet success!",
-		"toilet":  model.GetToilet(fmt.Sprint(toiletId)),
+		"toilet":  model.GetSingleToilet(fmt.Sprint(toiletId)),
 	})
 }

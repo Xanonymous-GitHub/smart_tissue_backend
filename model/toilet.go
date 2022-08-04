@@ -8,7 +8,3 @@ type Toilet struct {
 	Location    string
 	State       ToiletState
 }
-
-func (toilet *Toilet) GetId() string {
-	return toilet.Id
-}
