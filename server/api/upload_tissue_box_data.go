@@ -9,8 +9,6 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-// id, state, distance, maxDistance
-
 func UploadTissueBoxData(c *gin.Context) {
 	json := make(map[string]interface{})
 	c.BindJSON(&json)

@@ -20,6 +20,7 @@ func RegisterRestroom(c *gin.Context) {
 		})
 		return
 	}
+
 	restroom := model.Restroom{Id: id, Location: fmt.Sprint(location), ToiletIdList: []string{}}
 	model.RegisterRestroom(restroom)
 

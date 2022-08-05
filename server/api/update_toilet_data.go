@@ -20,6 +20,7 @@ func UpdateToiletData(c *gin.Context) {
 		})
 		return
 	}
+
 	rawPercentage, hasPercentage := json["percentage"]
 	if !hasPercentage {
 		c.JSON(http.StatusBadRequest, gin.H{
@@ -27,22 +28,7 @@ func UpdateToiletData(c *gin.Context) {
 		})
 		return
 	}
-	location, hasLocation := json["location"]
-	if !hasLocation {
-		c.JSON(http.StatusBadRequest, gin.H{
-			"message": "Fail to update, please send the new location of the toilet!",
-		})
-		return
-	}
-	state, hasState := json["state"]
-	if !hasState {
-		c.JSON(http.StatusBadRequest, gin.H{
-			"message": "Fail to update, please send the new state of the toilet!",
-		})
-		return
-	}
-	percentage, error := strconv.ParseFloat(fmt.Sprint(rawPercentage), 32)
-
+	percentage, error := strconv.ParseFloat(fmt.Sprint(rawPercentage), 64)
 	if error != nil {
 		c.JSON(http.StatusBadRequest, gin.H{
 			"message": "Fail to update, can not parse percentage to type float32!",
@@ -50,8 +36,24 @@ func UpdateToiletData(c *gin.Context) {
 		return
 	}
 
-	toilet := model.Toilet{Id: fmt.Sprint(toiletId), Percentage: float32(percentage), Location: fmt.Sprint(location), State: model.ToiletState(fmt.Sprint(state))}
-	isToiletExist := model.IsToiletExists(toilet.GetId())
+	location, hasLocation := json["location"]
+	if !hasLocation {
+		c.JSON(http.StatusBadRequest, gin.H{
+			"message": "Fail to update, please send the new location of the toilet!",
+		})
+		return
+	}
+
+	state, hasState := json["state"]
+	if !hasState {
+		c.JSON(http.StatusBadRequest, gin.H{
+			"message": "Fail to update, please send the new state of the toilet!",
+		})
+		return
+	}
+
+	toilet := model.Toilet{Id: fmt.Sprint(toiletId), Percentage: percentage, Location: fmt.Sprint(location), State: model.ToiletState(fmt.Sprint(state))}
+	isToiletExist := model.IsToiletExists(toilet.Id)
 	if !isToiletExist {
 		c.JSON(http.StatusBadRequest, gin.H{
 			"message": "Toilet not exist!",
@@ -62,6 +64,6 @@ func UpdateToiletData(c *gin.Context) {
 	model.UpdateToiletData(toilet)
 	c.JSON(http.StatusOK, gin.H{
 		"message": "Update toilet success!",
-		"toilet":  model.GetToilet(fmt.Sprint(toiletId)),
+		"toilet":  model.GetSingleToilet(fmt.Sprint(toiletId)),
 	})
 }

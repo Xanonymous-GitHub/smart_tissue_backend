@@ -30,6 +30,6 @@ func DeleteRestroom(c *gin.Context) {
 	model.DeleteRestroom(fmt.Sprint(id))
 
 	c.JSON(http.StatusOK, gin.H{
-		"message":  "Delete restroom success!",
+		"message": "Delete restroom success!",
 	})
 }
