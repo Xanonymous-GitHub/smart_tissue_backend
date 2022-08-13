@@ -12,33 +12,34 @@ func UpdateRestroomLocation(c *gin.Context) {
 	json := make(map[string]interface{})
 	c.BindJSON(&json)
 
-	id, hasId := json["id"]
-	if !hasId {
+	restroomId, hasRestroomId := json["restroomId"]
+	if !hasRestroomId {
 		c.JSON(http.StatusBadRequest, gin.H{
 			"message": "Failed to update, please send the id of the restroom.",
 		})
 		return
 	}
 
-	newLocation, hasLocation := json["location"]
+	location, hasLocation := json["location"]
 	if !hasLocation {
 		c.JSON(http.StatusBadRequest, gin.H{
-			"message": "Failed to update, please send the new location of this restroom.",
+			"message": "Failed to update, please send the location of this restroom.",
 		})
 		return
 	}
 
-	if !model.IsRestroomExists(fmt.Sprint(id)) {
+	isRestroomExist := model.IsRestroomExists(fmt.Sprint(restroomId))
+	if !isRestroomExist {
 		c.JSON(http.StatusBadRequest, gin.H{
 			"message": "Failed to update, please register a restroom or request an existing restroom.",
 		})
 		return
 	}
 
-	model.UpdateRestroomLocation(fmt.Sprint(id), fmt.Sprint(newLocation))
+	model.UpdateRestroomLocation(fmt.Sprint(restroomId), fmt.Sprint(location))
 
 	c.JSON(http.StatusOK, gin.H{
 		"message":  "Update restroom location success!",
-		"restroom": model.GetRestroom(fmt.Sprint(id)),
+		"restroom": model.GetRestroom(fmt.Sprint(restroomId)),
 	})
 }
