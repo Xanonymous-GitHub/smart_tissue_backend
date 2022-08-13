@@ -103,6 +103,10 @@ func UpdateRestroomLocation(restroomId string, location string) {
 }
 
 func UpdateToiletData(toilet Toilet) {
+	currentToilet := toilets[toilet.Id]
+	toilet.Distance = currentToilet.Distance
+	toilet.Percentage = math.Round(toilet.Distance/toilet.MaxDistance*10000) / 10000
+
 	toilets[toilet.Id] = toilet
 }
 

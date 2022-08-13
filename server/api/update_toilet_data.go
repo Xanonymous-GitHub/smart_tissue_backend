@@ -21,19 +21,17 @@ func UpdateToiletData(c *gin.Context) {
 		return
 	}
 
-	rawPercentage, hasPercentage := json["percentage"]
-	if !hasPercentage {
+	rawMaxDistance, hasMaxDistance := json["maxDistance"]
+	if !hasMaxDistance {
 		c.JSON(http.StatusBadRequest, gin.H{
-			"message": "Fail to update, please send the new percentage of the toilet!",
+			"message": "Fail to register, please send the max distance of this toilet!",
 		})
-		return
 	}
-	percentage, error := strconv.ParseFloat(fmt.Sprint(rawPercentage), 64)
+	maxDistance, error := strconv.ParseFloat(fmt.Sprint(rawMaxDistance), 64)
 	if error != nil {
 		c.JSON(http.StatusBadRequest, gin.H{
-			"message": "Fail to update, can not parse percentage to type float32!",
+			"message": "Fail to register, cannot parse max distance to float!",
 		})
-		return
 	}
 
 	location, hasLocation := json["location"]
@@ -52,8 +50,7 @@ func UpdateToiletData(c *gin.Context) {
 		return
 	}
 
-	toilet := model.Toilet{Id: fmt.Sprint(toiletId), Percentage: percentage, Location: fmt.Sprint(location), State: model.ToiletState(fmt.Sprint(state))}
-	isToiletExist := model.IsToiletExists(toilet.Id)
+	isToiletExist := model.IsToiletExists(fmt.Sprint(toiletId))
 	if !isToiletExist {
 		c.JSON(http.StatusBadRequest, gin.H{
 			"message": "Toilet not exist!",
@@ -61,7 +58,10 @@ func UpdateToiletData(c *gin.Context) {
 		return
 	}
 
+	toilet := model.Toilet{Id: fmt.Sprint(toiletId), MaxDistance: maxDistance, Location: fmt.Sprint(location), State: model.ToiletState(fmt.Sprint(state))}
+
 	model.UpdateToiletData(toilet)
+
 	c.JSON(http.StatusOK, gin.H{
 		"message": "Update toilet success!",
 		"toilet":  model.GetSingleToilet(fmt.Sprint(toiletId)),
