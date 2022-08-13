@@ -31,11 +31,11 @@ func GetToiletsFromRestroom(restroomId string) []Toilet {
 	restroomToilets := []Toilet{}
 	restroom := restrooms[restroomId]
 	toiletIdList := restroom.ToiletIdList
-	
+
 	for _, toiletId := range toiletIdList {
 		restroomToilets = append(restroomToilets, toilets[toiletId])
 	}
-	
+
 	return restroomToilets
 }
 
@@ -85,11 +85,15 @@ func RegisterRestroom(restroom Restroom) {
 	restrooms[restroom.Id] = restroom
 }
 
-func RegisterToilet(toiletId string, restroomId string) {
+func RegisterToilet(toiletId string, restroomId string, location string) {
 	restroom := restrooms[restroomId]
 	restroom.ToiletIdList = append(restroom.ToiletIdList, toiletId)
 	restrooms[restroomId] = restroom
 	RemoveIdFromUndeployedToiletId(toiletId)
+
+	toilet := toilets[toiletId]
+	toilet.Location = location
+	toilets[toilet.Id] = toilet
 }
 
 func UpdateRestroomLocation(restroomId string, location string) {

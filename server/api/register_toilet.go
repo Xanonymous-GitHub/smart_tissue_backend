@@ -28,6 +28,14 @@ func RegisterToilet(c *gin.Context) {
 		return
 	}
 
+	location, hasLocation := json["location"]
+	if !hasLocation {
+		c.JSON(http.StatusBadRequest, gin.H{
+			"message": "Fail to register, please send the location of this toilet!",
+		})
+		return
+	}
+
 	isUndeployedToiletExist := model.IsUndeployedToiletExist(fmt.Sprint(toiletId))
 	if !isUndeployedToiletExist {
 		c.JSON(http.StatusBadRequest, gin.H{
@@ -44,7 +52,7 @@ func RegisterToilet(c *gin.Context) {
 		return
 	}
 
-	model.RegisterToilet(fmt.Sprint(toiletId), fmt.Sprint(restroomId))
+	model.RegisterToilet(fmt.Sprint(toiletId), fmt.Sprint(restroomId), fmt.Sprint(location))
 
 	c.JSON(http.StatusCreated, gin.H{
 		"message": "Register toilet success!",
