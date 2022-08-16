@@ -31,11 +31,11 @@ func GetToiletsFromRestroom(restroomId string) []Toilet {
 	restroomToilets := []Toilet{}
 	restroom := restrooms[restroomId]
 	toiletIdList := restroom.ToiletIdList
-	
+
 	for _, toiletId := range toiletIdList {
 		restroomToilets = append(restroomToilets, toilets[toiletId])
 	}
-	
+
 	return restroomToilets
 }
 
@@ -85,11 +85,15 @@ func RegisterRestroom(restroom Restroom) {
 	restrooms[restroom.Id] = restroom
 }
 
-func RegisterToilet(toiletId string, restroomId string) {
+func RegisterToilet(toiletId string, restroomId string, location string) {
 	restroom := restrooms[restroomId]
 	restroom.ToiletIdList = append(restroom.ToiletIdList, toiletId)
 	restrooms[restroomId] = restroom
-	RemoveIdFromUndeployedToiletId(toiletId)
+	RemoveIdFromUndeployedToiletIds(toiletId)
+
+	toilet := toilets[toiletId]
+	toilet.Location = location
+	toilets[toilet.Id] = toilet
 }
 
 func UpdateRestroomLocation(restroomId string, location string) {
@@ -99,6 +103,10 @@ func UpdateRestroomLocation(restroomId string, location string) {
 }
 
 func UpdateToiletData(toilet Toilet) {
+	currentToilet := toilets[toilet.Id]
+	toilet.Distance = currentToilet.Distance
+	toilet.Percentage = math.Round(toilet.Distance/toilet.MaxDistance*10000) / 10000
+
 	toilets[toilet.Id] = toilet
 }
 
@@ -121,7 +129,7 @@ func DeleteRestroom(restroomId string) {
 	delete(restrooms, restroomId)
 }
 
-func RemoveIdFromUndeployedToiletId(toiletId string) {
+func RemoveIdFromUndeployedToiletIds(toiletId string) {
 	for toiletIndex, currentToiletId := range undeployedToiletIdList {
 		if currentToiletId == toiletId {
 			undeployedToiletIdList[toiletIndex] = undeployedToiletIdList[len(undeployedToiletIdList)-1]

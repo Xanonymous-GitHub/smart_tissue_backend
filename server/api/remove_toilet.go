@@ -15,7 +15,7 @@ func RemoveToilet(c *gin.Context) {
 	toiletId, hasToiletId := json["toiletId"]
 	if !hasToiletId {
 		c.JSON(http.StatusBadRequest, gin.H{
-			"message": "Fail to remove, please send the id of the toilet!",
+			"message": "Failed to remove, please send the id of the toilet.",
 		})
 		return
 	}
@@ -23,7 +23,7 @@ func RemoveToilet(c *gin.Context) {
 	restroomId, hasRestroomId := json["restroomId"]
 	if !hasRestroomId {
 		c.JSON(http.StatusBadRequest, gin.H{
-			"message": "Fail to remove, please send the id of the restroom!",
+			"message": "Failed to remove, please send the id of the restroom.",
 		})
 		return
 	}
@@ -31,7 +31,7 @@ func RemoveToilet(c *gin.Context) {
 	isToiletExist := model.IsToiletExists(fmt.Sprint(toiletId))
 	if !isToiletExist {
 		c.JSON(http.StatusBadRequest, gin.H{
-			"message": "Fail to remove, toilet not exist or has not been registered!",
+			"message": "Failed to remove, please request an existing toilet.",
 		})
 		return
 	}
@@ -39,7 +39,7 @@ func RemoveToilet(c *gin.Context) {
 	isRestroomExist := model.IsRestroomExists(fmt.Sprint(restroomId))
 	if !isRestroomExist {
 		c.JSON(http.StatusBadRequest, gin.H{
-			"message": "Fail to remove, restroom not exist!",
+			"message": "Failed to remove, please request an existing restroom.",
 		})
 		return
 	}
@@ -47,7 +47,7 @@ func RemoveToilet(c *gin.Context) {
 	isToiletIdInRestroom := model.IsToiletIdInRestroom(fmt.Sprint(toiletId), fmt.Sprint(restroomId))
 	if !isToiletIdInRestroom {
 		c.JSON(http.StatusBadRequest, gin.H{
-			"message": "Fail to remove, toilet is not belong to this restroom!",
+			"message": "Failed to remove, please request a toilet which is belong to the restroom.",
 		})
 		return
 	}

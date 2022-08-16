@@ -16,30 +16,28 @@ func UpdateToiletData(c *gin.Context) {
 	toiletId, hasToiletId := json["toiletId"]
 	if !hasToiletId {
 		c.JSON(http.StatusBadRequest, gin.H{
-			"message": "Fail to update, please send the id of the target toilet!",
+			"message": "Failed to update, please send the id of the toilet.",
 		})
 		return
 	}
 
-	rawPercentage, hasPercentage := json["percentage"]
-	if !hasPercentage {
+	rawMaxDistance, hasMaxDistance := json["maxDistance"]
+	if !hasMaxDistance {
 		c.JSON(http.StatusBadRequest, gin.H{
-			"message": "Fail to update, please send the new percentage of the toilet!",
+			"message": "Failed to register, please send the max distance of the toilet.",
 		})
-		return
 	}
-	percentage, error := strconv.ParseFloat(fmt.Sprint(rawPercentage), 64)
+	maxDistance, error := strconv.ParseFloat(fmt.Sprint(rawMaxDistance), 64)
 	if error != nil {
 		c.JSON(http.StatusBadRequest, gin.H{
-			"message": "Fail to update, can not parse percentage to type float32!",
+			"message": "Failed to register, cannot parse max distance to float.",
 		})
-		return
 	}
 
 	location, hasLocation := json["location"]
 	if !hasLocation {
 		c.JSON(http.StatusBadRequest, gin.H{
-			"message": "Fail to update, please send the new location of the toilet!",
+			"message": "Failed to update, please send the location of the toilet.",
 		})
 		return
 	}
@@ -47,21 +45,23 @@ func UpdateToiletData(c *gin.Context) {
 	state, hasState := json["state"]
 	if !hasState {
 		c.JSON(http.StatusBadRequest, gin.H{
-			"message": "Fail to update, please send the new state of the toilet!",
+			"message": "Failed to update, please send the state of the toilet.",
 		})
 		return
 	}
 
-	toilet := model.Toilet{Id: fmt.Sprint(toiletId), Percentage: percentage, Location: fmt.Sprint(location), State: model.ToiletState(fmt.Sprint(state))}
-	isToiletExist := model.IsToiletExists(toilet.Id)
+	isToiletExist := model.IsToiletExists(fmt.Sprint(toiletId))
 	if !isToiletExist {
 		c.JSON(http.StatusBadRequest, gin.H{
-			"message": "Toilet not exist!",
+			"message": "Failed to update, please request an existing toilet.",
 		})
 		return
 	}
 
+	toilet := model.Toilet{Id: fmt.Sprint(toiletId), MaxDistance: maxDistance, Location: fmt.Sprint(location), State: model.ToiletState(fmt.Sprint(state))}
+
 	model.UpdateToiletData(toilet)
+
 	c.JSON(http.StatusOK, gin.H{
 		"message": "Update toilet success!",
 		"toilet":  model.GetSingleToilet(fmt.Sprint(toiletId)),
