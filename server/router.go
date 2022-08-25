@@ -19,6 +19,8 @@ func SetupRouter() {
 	router.PUT("/toilet", api.UpdateToiletData)
 	router.DELETE("/toilet", api.RemoveToilet)
 	router.PUT("/toiletData", api.UploadTissueBoxData)
+	
+	router.GET("/toiletsWebsocket", api.GetToiletWebsocket)
 
 	_ = router.Run()
 }
